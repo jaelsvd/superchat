@@ -73,9 +73,9 @@ function ChatRoom() {
     const dummy = useRef<null | HTMLDivElement>(null);
     
      const messagesRef = collection(firestore, 'messages');
-    const q = query(messagesRef, orderBy('createdAt'), limit(25));
-    const [messages] = useCollectionData(q);    
-    const [formValue, setFormValue] = useState('');
+   const q = query(messagesRef, orderBy('createdAt'), limit(25));
+
+    const [messages] = useCollectionData(q);    const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -92,12 +92,16 @@ function ChatRoom() {
         // Scroll to the bottom of the chat room
         dummy.current?.scrollIntoView({ behavior: 'smooth' });
     };
-
+    const messagesMapped = messages && messages.map((msg) => ({
+        text: msg.text,
+        uid: msg.uid,
+        photoURL: msg.photoURL
+    }));   
     return (
         <>
             <main>
-                {messages &&
-                messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
+                {messagesMapped &&
+                    messagesMapped.map((msg, index) => <ChatMessage key={index} message={msg} />)}
                 <span ref={dummy}></span>
             </main>
 
