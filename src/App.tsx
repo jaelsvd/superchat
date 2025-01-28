@@ -8,13 +8,13 @@ import { useRef, useState } from 'react';
 import * as React from "react";
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyC0W4kBq3_KPYe7LRPEc6putbx52K7cWhs',
-    authDomain: 'my-portfolio-jl.firebaseapp.com',
-    projectId: 'my-portfolio-jl',
-    storageBucket: 'my-portfolio-jl.firebasestorage.app',
-    messagingSenderId: '986157314830',
-    appId: '1:986157314830:web:c2215c0dd4dd2eaa3f9d5f',
-    measurementId: 'G-8P8ZV2GXCK',
+    apiKey: "AIzaSyC0W4kBq3_KPYe7LRPEc6putbx52K7cWhs",
+    authDomain: "my-portfolio-jl.firebaseapp.com",
+    projectId: "my-portfolio-jl",
+    storageBucket: "my-portfolio-jl.firebasestorage.app",
+    messagingSenderId: "986157314830",
+    appId: "1:986157314830:web:c2215c0dd4dd2eaa3f9d5f",
+    measurementId: "G-8P8ZV2GXCK"
 };
 
 initializeApp(firebaseConfig);
@@ -70,14 +70,15 @@ function SignOut() {
 function ChatRoom() {
     const dummy = useRef<null | HTMLDivElement>(null);
     const messagesRef = collection(firestore, 'messages');
+    console.log('messagesRef',messagesRef);
     const q = query(messagesRef, orderBy('createdAt'), limit(25));
 
-    const [messages] = useCollectionData<ChatMessageProps[]>(q);    
+    const [messages] = useCollectionData(q);    
     const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
-
+debugger;
         const { uid, photoURL } = auth.currentUser!; // `auth.currentUser!` is safe here, but you may want to handle it better in production.
 
         await addDoc(messagesRef, {
