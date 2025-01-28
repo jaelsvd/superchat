@@ -8,19 +8,21 @@ import { useRef, useState } from 'react';
 import * as React from "react";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC0W4kBq3_KPYe7LRPEc6putbx52K7cWhs",
-    authDomain: "my-portfolio-jl.firebaseapp.com",
-    projectId: "my-portfolio-jl",
-    storageBucket: "my-portfolio-jl.firebasestorage.app",
-    messagingSenderId: "986157314830",
-    appId: "1:986157314830:web:c2215c0dd4dd2eaa3f9d5f",
-    measurementId: "G-8P8ZV2GXCK"
+    apiKey: "AIzaSyCbFzLzkoIfccbBNjJWcrHo3ULi6RbeyFg",
+    authDomain: "jael-chat.firebaseapp.com",
+    projectId: "jael-chat",
+    storageBucket: "jael-chat.firebasestorage.app",
+    messagingSenderId: "331430286969",
+    appId: "1:331430286969:web:f1c42391ad017424b6e6a8",
+    measurementId: "G-QYXRXHDV97"
 };
 
-initializeApp(firebaseConfig);
-
-const auth = getAuth();
-const firestore = getFirestore();
+const app = initializeApp(firebaseConfig);
+//const analytics = getAnalytics(app);
+// Initialize Cloud Firestore and get a reference to the service
+//const db = getFirestore(app);
+const auth = getAuth(app);
+const firestore = getFirestore(app);
 
 function App() {
     const [user] = useAuthState(auth);
@@ -69,16 +71,14 @@ function SignOut() {
 
 function ChatRoom() {
     const dummy = useRef<null | HTMLDivElement>(null);
-    const messagesRef = collection(firestore, 'messages');
-    console.log('messagesRef',messagesRef);
+    
+     const messagesRef = collection(firestore, 'messages');
     const q = query(messagesRef, orderBy('createdAt'), limit(25));
-
     const [messages] = useCollectionData(q);    
     const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
-debugger;
         const { uid, photoURL } = auth.currentUser!; // `auth.currentUser!` is safe here, but you may want to handle it better in production.
 
         await addDoc(messagesRef, {
@@ -97,7 +97,7 @@ debugger;
         <>
             <main>
                 {messages &&
-                    messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+                messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
                 <span ref={dummy}></span>
             </main>
 
