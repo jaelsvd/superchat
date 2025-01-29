@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 import * as React from "react";
+import Chat from "./pages/chat/Chat.tsx";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCbFzLzkoIfccbBNjJWcrHo3ULi6RbeyFg",
@@ -99,6 +100,7 @@ function ChatRoom() {
     }));   
     return (
         <>
+            <Chat />
             <main>
                 {messagesMapped &&
                     messagesMapped.map((msg, index) => <ChatMessage key={index} message={msg} />)}
