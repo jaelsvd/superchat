@@ -1,4 +1,5 @@
 import './App.css';
+import './styles/base/_base.scss';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -30,14 +31,16 @@ function App() {
 
     return (
         <div className="App">
-            <header>
-                <h1>⚛️🔥💬</h1>
-                <SignOut />
-            </header>
 
-            <section>
-                {user ? <ChatRoom /> : <SignIn />}
-            </section>
+            <Chat />
+            {/*<header>*/}
+            {/*    <h1>⚛️🔥💬</h1>*/}
+            {/*    <SignOut />*/}
+            {/*</header>*/}
+            
+            {/*<section>*/}
+            {/*    {user ? <ChatRoom /> : <SignIn />}*/}
+            {/*</section>*/}
         </div>
     );
 }
@@ -100,7 +103,6 @@ function ChatRoom() {
     }));   
     return (
         <>
-            <Chat />
             <main>
                 {messagesMapped &&
                     messagesMapped.map((msg, index) => <ChatMessage key={index} message={msg} />)}
